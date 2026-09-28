@@ -1,0 +1,709 @@
+@use '../styles/tokens' as *;
+
+// The sign-in screen is a night scene in both themes, like the Voice call screen.
+$space: #03050c;
+$text: #eef1fa;
+$muted: #8b95b0;
+$line: rgba(149, 156, 255, 0.16);
+$periwinkle: #b4b9ff;
+$brass-glow: #f0c987;
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: $space;
+  color: $text;
+  font-family: $font-body;
+  isolation: isolate;
+}
+
+// Static stars and nebula: painted once, never re-rendered.
+.space {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1px 1px at 12% 18%, rgba(222, 228, 255, 0.8), transparent 60%),
+    radial-gradient(1px 1px at 27% 72%, rgba(222, 228, 255, 0.6), transparent 60%),
+    radial-gradient(1.4px 1.4px at 41% 34%, rgba(222, 228, 255, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 63% 12%, rgba(222, 228, 255, 0.55), transparent 60%),
+    radial-gradient(1.2px 1.2px at 78% 64%, rgba(222, 228, 255, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 88% 28%, rgba(222, 228, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 8% 88%, rgba(222, 228, 255, 0.5), transparent 60%),
+    radial-gradient(1.2px 1.2px at 94% 86%, rgba(222, 228, 255, 0.6), transparent 60%),
+    radial-gradient(60% 45% at 50% 38%, rgba(64, 70, 200, 0.2), transparent 70%),
+    radial-gradient(40% 35% at 85% 100%, rgba(224, 166, 74, 0.08), transparent 70%),
+    radial-gradient(35% 30% at 0% 0%, rgba(90, 98, 230, 0.1), transparent 70%);
+
+  &::after {
+    // fine star dust tile
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background-image:
+      radial-gradient(0.8px 0.8px at 23px 41px, rgba(222, 228, 255, 0.6), transparent 60%),
+      radial-gradient(0.8px 0.8px at 131px 89px, rgba(222, 228, 255, 0.5), transparent 60%),
+      radial-gradient(1px 1px at 77px 167px, rgba(222, 228, 255, 0.6), transparent 60%),
+      radial-gradient(0.8px 0.8px at 211px 23px, rgba(222, 228, 255, 0.4), transparent 60%);
+    background-size:
+      190px 200px,
+      260px 240px,
+      310px 330px,
+      420px 400px;
+  }
+}
+
+// ------------------------------------------------------------------ header / footer
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px clamp(16px, 4vw, 40px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: $font-mono;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.32em;
+}
+
+.telemetry {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: $font-mono;
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $muted;
+}
+
+.clock {
+  font-variant-numeric: tabular-nums;
+}
+
+.secure {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #7fe0b4;
+}
+
+.foot {
+  padding: 16px;
+  text-align: center;
+  font-family: $font-mono;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(139, 149, 176, 0.7);
+}
+
+// ------------------------------------------------------------------ stage and orb
+.stage {
+  --orb: clamp(260px, min(58vh, 92vw), 600px);
+  --s: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px 8px;
+
+  &[data-compact] {
+    --s: 0.46;
+  }
+}
+
+// The slot's height eases; the orb itself only scales (GPU), so the canvas keeps its size and
+// never re-seeds mid-transition.
+.orbSlot {
+  width: var(--orb);
+  height: calc(var(--orb) * var(--s) * 0.6);
+  transition: height 0.55s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+.orbInner {
+  position: relative;
+  width: var(--orb);
+  height: var(--orb);
+  margin-top: calc(var(--orb) * var(--s) * -0.17);
+  transform: scale(var(--s));
+  transform-origin: 50% 0;
+  transition:
+    transform 0.55s cubic-bezier(0.3, 0.7, 0.2, 1),
+    margin 0.55s cubic-bezier(0.3, 0.7, 0.2, 1);
+  will-change: transform;
+
+  .page[data-finishing] & {
+    transform: scale(calc(var(--s) * 1.35));
+    opacity: 0;
+    transition:
+      transform 0.65s cubic-bezier(0.5, 0, 0.75, 0),
+      opacity 0.65s ease-in;
+  }
+}
+
+.orbButton {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid $periwinkle;
+    outline-offset: 6px;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-family: $font-mono;
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: $periwinkle;
+  transition: color 0.3s ease;
+
+  &[data-tone='listening'] {
+    color: #dfe2ff;
+  }
+  &[data-tone='verifying'] {
+    color: $brass-glow;
+  }
+  &[data-tone='success'] {
+    color: #7fe0b4;
+  }
+  &[data-tone='error'] {
+    color: #ff9f94;
+  }
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+
+  .status[data-tone='listening'] &,
+  .status[data-tone='verifying'] & {
+    animation: pulse 1s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.6);
+    opacity: 0.55;
+  }
+}
+
+// ------------------------------------------------------------------ voice panel
+.voicePanel {
+  width: min(420px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  animation: rise 0.45s cubic-bezier(0.3, 0.7, 0.2, 1) both;
+}
+
+.title {
+  margin: 0;
+  font-family: $font-display;
+  font-size: clamp(24px, 3.4vw, 32px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px 8px 8px;
+  border: 1px solid $line;
+  border-radius: 999px;
+  background: rgba(10, 14, 28, 0.7);
+  text-align: left;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4046c8, #8c92f0);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.accountText {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  line-height: 1.3;
+
+  span {
+    color: $muted;
+  }
+}
+
+.voiceEmail {
+  width: 100%;
+  text-align: left;
+}
+
+.mic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 210px;
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(180, 185, 255, 0.45);
+  background: radial-gradient(120% 140% at 50% 0%, rgba(110, 118, 255, 0.45), rgba(40, 46, 140, 0.35));
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow:
+    0 0 0 1px rgba(110, 118, 255, 0.15),
+    0 10px 40px -10px rgba(110, 118, 255, 0.7);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.25s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 0 1px rgba(110, 118, 255, 0.3),
+      0 14px 46px -10px rgba(110, 118, 255, 0.9);
+  }
+
+  &[data-state='listening'] {
+    border-color: rgba(255, 255, 255, 0.6);
+    animation: listening 1.4s ease-in-out infinite;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+@keyframes listening {
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(110, 118, 255, 0.12),
+      0 10px 50px -8px rgba(140, 146, 255, 0.95);
+  }
+}
+
+.note {
+  margin: 0;
+  max-width: 360px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #cfd5ea;
+}
+
+.fine {
+  margin: 4px 0 0;
+  max-width: 360px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: $muted;
+}
+
+.switch,
+.linkBtn,
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 4px;
+  border: none;
+  background: none;
+  color: $periwinkle;
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.linkBtn {
+  font-size: 13px;
+  padding: 4px;
+}
+
+.back {
+  align-self: flex-start;
+  margin: -4px 0 0 -4px;
+  color: $muted;
+  font-size: 13px;
+}
+
+// ------------------------------------------------------------------ card
+.card {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 22px;
+  border-radius: 20px;
+  // No backdrop-filter: blurring over an animated canvas costs a full re-blur every frame.
+  background: linear-gradient(180deg, rgba(16, 22, 44, 0.92), rgba(9, 13, 28, 0.94));
+  border: 1px solid $line;
+  box-shadow:
+    0 30px 80px -30px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  animation: rise 0.45s cubic-bezier(0.3, 0.7, 0.2, 1) both;
+
+  &::before {
+    // hairline glow along the top edge
+    content: '';
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(180, 185, 255, 0.8), transparent);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 18px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(6, 10, 22, 0.8);
+  border: 1px solid $line;
+
+  button {
+    position: relative;
+    z-index: 1;
+    min-height: 36px;
+    border: none;
+    background: none;
+    color: $muted;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+
+    &[aria-selected='true'] {
+      color: #fff;
+    }
+  }
+}
+
+.tabThumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(110, 118, 255, 0.55), rgba(64, 70, 200, 0.45));
+  box-shadow: 0 0 20px -4px rgba(110, 118, 255, 0.7);
+  transition: transform 0.35s cubic-bezier(0.3, 0.7, 0.2, 1);
+
+  .tabs[data-active='signup'] & {
+    transform: translateX(100%);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.heading {
+  margin-bottom: 4px;
+
+  h1 {
+    margin: 0 0 4px;
+    font-family: $font-display;
+    font-size: 23px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: $muted;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  color: #cfd5ea;
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  span {
+    width: 17px;
+    height: 17px;
+    border-radius: 5px;
+    border: 1px solid rgba(149, 156, 255, 0.4);
+    background: rgba(6, 10, 22, 0.8);
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  input:checked + span {
+    border-color: transparent;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+        center / 13px no-repeat,
+      #5b62e6;
+  }
+
+  input:focus-visible + span {
+    outline: 2px solid $periwinkle;
+    outline-offset: 2px;
+  }
+}
+
+.eye {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-right: -6px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: $muted;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 122, 128, 0.1);
+  border: 1px solid rgba(255, 122, 128, 0.28);
+  color: #ffc1ba;
+  font-size: 13.5px;
+  line-height: 1.45;
+}
+
+.primary {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  margin-top: 4px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #6a71f2, #444bd0);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 12px 34px -12px rgba(106, 113, 242, 0.9);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.25s ease;
+
+  &::after {
+    // light sweep on hover
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.22) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.7s ease;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+
+    &::after {
+      transform: translateX(100%);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.8;
+  }
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.secondary {
+  min-height: 46px;
+  border-radius: 12px;
+  border: 1px solid rgba(149, 156, 255, 0.35);
+  background: rgba(6, 10, 22, 0.6);
+  color: #dfe2ff;
+  font-weight: 600;
+
+  &:disabled {
+    color: $muted;
+    border-color: $line;
+  }
+}
+
+.dev {
+  align-self: center;
+  font-family: $font-mono;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: $brass-glow;
+}
+
+// "Transmission sent": signal rings expanding from the envelope
+.transmit {
+  position: relative;
+  align-self: center;
+  width: 64px;
+  height: 64px;
+  margin: 6px 0 2px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+
+  svg {
+    position: relative;
+    z-index: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(110, 118, 255, 0.7), rgba(64, 70, 200, 0.3));
+  }
+
+  span {
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(180, 185, 255, 0.6);
+    animation: signal 2.4s ease-out infinite;
+
+    &:nth-child(2) {
+      animation-delay: 0.8s;
+    }
+    &:nth-child(3) {
+      animation-delay: 1.6s;
+    }
+  }
+}
+
+@keyframes signal {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+// ------------------------------------------------------------------ small screens
+@media (max-width: 560px) {
+  .telemetry .clock {
+    display: none;
+  }
+
+  .stage {
+    --orb: min(94vw, 52vh);
+
+    &[data-compact] {
+      --s: 0.4;
+    }
+  }
+
+  .card {
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbSlot,
+  .orbInner,
+  .tabThumb {
+    transition: none;
+  }
+
+  .card,
+  .voicePanel {
+    animation: none;
+  }
+}

@@ -1,0 +1,328 @@
+@use '../styles/tokens' as *;
+
+.page {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 18px 32px;
+  border-bottom: 1px solid $line;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: $ink-3;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.secondary,
+.dark {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.secondary {
+  border: 1px solid $line-input;
+  background: $surface;
+}
+
+.dark {
+  background: $ink;
+  color: $surface !important;
+}
+
+.body {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 32px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+  }
+}
+
+.body > .card {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid $line-soft;
+}
+
+.cardHeadStack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 18px 18px 6px;
+}
+
+.caption {
+  display: block;
+  font-size: 12px;
+  color: $ink-3;
+}
+
+.muted {
+  color: $ink-2;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  th {
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: $ink-3;
+    border-bottom: 1px solid $line-soft;
+  }
+
+  td {
+    padding: 12px;
+    border-bottom: 1px solid $ground;
+    color: $ink-soft;
+    vertical-align: middle;
+  }
+
+  th:first-child,
+  td:first-child {
+    padding-left: 18px;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.sourceName {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: $ink;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: $radius-pill;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.indexed {
+  background: $ok-tint;
+  color: $ok;
+}
+
+.syncing {
+  background: $orbit-tint;
+  color: $orbit-hover;
+}
+
+.queued {
+  background: $rail;
+  color: $ink-soft;
+}
+
+.attention {
+  background: $brass-tint;
+  color: $brass-ink;
+}
+
+.side {
+  width: 420px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.matrix {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 18px 0;
+}
+
+.matrixRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  align-items: center;
+  border-bottom: 1px solid $ground;
+}
+
+.matrixHead {
+  padding-bottom: 6px;
+  border-bottom-color: $line-soft;
+  font-size: 12px;
+  font-weight: 600;
+  color: $ink-3;
+  text-align: center;
+
+  span:first-child {
+    text-align: left;
+  }
+}
+
+.role {
+  font-size: 14px;
+  font-weight: 500;
+  color: $ink-body;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: $orbit;
+    cursor: pointer;
+  }
+}
+
+.error {
+  margin: 10px 18px 0;
+  font-size: 13px;
+  color: $danger;
+}
+
+.note {
+  display: flex;
+  gap: 8px;
+  margin: 12px 18px 18px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: $ground;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $ink-soft;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: $ink-2;
+  }
+}
+
+.log {
+  list-style: none;
+  margin: 0;
+  padding: 0 18px 6px;
+
+  li {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid $ground;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.allowed,
+.blocked {
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.allowed {
+  background: $ok-tint;
+  color: $ok;
+}
+
+.blocked {
+  background: $brass-tint;
+  color: $brass-ink;
+}
+
+.logText {
+  flex-grow: 1;
+  font-size: 13px;
+  line-height: 1.45;
+  color: $ink-body;
+}
+
+@media (max-width: $bp-medium) {
+  .body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .side {
+    width: 100%;
+  }
+}
+
+@media (max-width: $bp-narrow) {
+  .header,
+  .body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

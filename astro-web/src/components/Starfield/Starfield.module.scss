@@ -1,0 +1,183 @@
+@use '../../styles/tokens' as *;
+
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+// Two soft glows: indigo from the top right, brass low on the left.
+.nebula {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 50% at 88% 0%, var(--nebula-a), transparent 70%),
+    radial-gradient(45% 40% at 0% 100%, var(--nebula-b), transparent 70%);
+}
+
+// Static star dust, three tile sizes so the repeat is hard to spot.
+.dust {
+  position: absolute;
+  inset: 0;
+  --s: rgba(var(--star), calc(var(--star-alpha) * 0.55));
+  background-image:
+    radial-gradient(1px 1px at 23px 41px, var(--s), transparent 60%),
+    radial-gradient(1px 1px at 131px 89px, var(--s), transparent 60%),
+    radial-gradient(1.2px 1.2px at 77px 167px, var(--s), transparent 60%),
+    radial-gradient(1px 1px at 211px 23px, var(--s), transparent 60%),
+    radial-gradient(1.4px 1.4px at 301px 211px, var(--s), transparent 60%),
+    radial-gradient(1px 1px at 367px 97px, var(--s), transparent 60%);
+  background-size:
+    180px 190px,
+    260px 240px,
+    310px 330px,
+    420px 400px,
+    470px 450px,
+    530px 510px;
+}
+
+.chart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 560px;
+  height: 560px;
+  opacity: 0.9;
+  mask-image: radial-gradient(circle at 100% 0%, #000 30%, transparent 75%);
+}
+
+.rings {
+  fill: none;
+  stroke: var(--sky-grid);
+  stroke-width: 1;
+
+  circle:nth-child(2) {
+    stroke-dasharray: 2 6;
+  }
+}
+
+.orbitPath {
+  fill: none;
+  stroke: $orbit-glow;
+  stroke-width: 1;
+  stroke-dasharray: 1 5;
+}
+
+.satellite {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: $orbit;
+  box-shadow: 0 0 10px 2px $orbit-glow;
+  offset-rotate: 0deg;
+  animation: orbit 70s linear infinite;
+}
+
+@keyframes orbit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(var(--star), var(--star-alpha));
+  animation: twinkle 6s ease-in-out infinite;
+}
+
+// A few brighter stars get a four-point glint.
+.glint {
+  box-shadow: 0 0 6px 1px rgba(var(--star), calc(var(--star-alpha) * 0.6));
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: linear-gradient(90deg, transparent, rgba(var(--star), calc(var(--star-alpha) * 0.7)), transparent);
+    transform: translate(-50%, -50%);
+  }
+
+  &::before {
+    width: 14px;
+    height: 1px;
+  }
+
+  &::after {
+    width: 1px;
+    height: 14px;
+    background: linear-gradient(180deg, transparent, rgba(var(--star), calc(var(--star-alpha) * 0.7)), transparent);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// One faint meteor, visible for a moment every 23 seconds.
+.meteor {
+  position: absolute;
+  top: 12%;
+  left: 62%;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(var(--star), 0), rgba(var(--star), calc(var(--star-alpha) * 0.9)));
+  transform: rotate(-24deg);
+  opacity: 0;
+  animation: meteor 23s ease-out 6s infinite;
+}
+
+@keyframes meteor {
+  0% {
+    opacity: 0;
+    transform: rotate(-24deg) translateX(0);
+  }
+  1% {
+    opacity: 1;
+  }
+  5% {
+    opacity: 0;
+    transform: rotate(-24deg) translateX(-260px);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(-24deg) translateX(-260px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satellite,
+  .meteor {
+    display: none;
+  }
+
+  .star {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
+@media (max-width: $bp-narrow) {
+  .chart {
+    transform: scale(0.64);
+    transform-origin: top right;
+  }
+}

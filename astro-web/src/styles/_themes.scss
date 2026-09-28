@@ -1,0 +1,111 @@
+// Theme palettes. Light is "chart paper": a cool daylight star chart.
+// Dark is "deep space": the same chart read at night, with the orbit indigo
+// lifted to periwinkle so it works both as text on dark and as a button fill
+// under dark text ($surface).
+
+@mixin light {
+  color-scheme: light;
+
+  --ground: #eef1f6;
+  --surface: #ffffff;
+  --surface-2: #f7f8fb;
+  --rail: #e5e9f1;
+  --line: #d5dbe6;
+  --line-soft: #e3e7ef;
+  --line-mid: #d3d9e5;
+  --line-input: #cbd2df;
+  --line-strong: #c3cada;
+  --line-heavy: #aeb7c9;
+  --hover-veil: rgba(255, 255, 255, 0.55);
+
+  --ink: #14203a;
+  --ink-body: #1c2744;
+  --ink-soft: #2b3550;
+  --ink-2: #46516b;
+  --ink-3: #5e6882;
+  --ink-4: #7c869c;
+
+  --orbit: #4046c8;
+  --orbit-hover: #2e33a3;
+  --orbit-deep: #262b8a;
+  --orbit-bright: #8c92f0;
+  --orbit-line: #bcc1ee;
+  --orbit-tint: #e3e5fa;
+  --orbit-wash: #f5f6fe;
+  --orbit-glow: rgba(64, 70, 200, 0.18);
+
+  --brass: #c98a2b;
+  --brass-ink: #7a4b0c;
+  --brass-deep: #5c3a08;
+  --brass-deeper: #2e1d04;
+  --brass-line: #e4cfa6;
+  --brass-tint: #f6ecd9;
+
+  --ok: #19664a;
+  --ok-tint: #e3f2ea;
+  --ok-line: #b5dcc7;
+  --danger: #b4232c;
+  --danger-ink: #9a2a1a;
+  --danger-tint: #fbe9e4;
+
+  // Sky layer
+  --star: 20, 32, 58;
+  --star-alpha: 0.22;
+  --sky-grid: rgba(64, 70, 200, 0.05);
+  --nebula-a: rgba(64, 70, 200, 0.06);
+  --nebula-b: rgba(201, 138, 43, 0.05);
+  --scrollbar: #c3cada;
+}
+
+@mixin dark {
+  color-scheme: dark;
+
+  --ground: #070b16;
+  --surface: #0e1528;
+  --surface-2: #111a30;
+  --rail: #0a101f;
+  --line: #1f2a45;
+  --line-soft: #19223a;
+  --line-mid: #1d2742;
+  --line-input: #2a3553;
+  --line-strong: #2f3b5c;
+  --line-heavy: #3a4666;
+  --hover-veil: rgba(140, 150, 255, 0.06);
+
+  --ink: #eef1fa;
+  --ink-body: #dce2f0;
+  --ink-soft: #c3cbe0;
+  --ink-2: #a8b2ca;
+  --ink-3: #8b95b0;
+  --ink-4: #6f7a96;
+
+  --orbit: #959cff;
+  --orbit-hover: #b4b9ff;
+  --orbit-deep: #c7cbff;
+  --orbit-bright: #7b82f5;
+  --orbit-line: #353d86;
+  --orbit-tint: #1c2253;
+  --orbit-wash: #121a38;
+  --orbit-glow: rgba(149, 156, 255, 0.28);
+
+  --brass: #e0a64a;
+  --brass-ink: #f0c987;
+  --brass-deep: #f3d49c;
+  --brass-deeper: #fbe6c2;
+  --brass-line: #4d3c1c;
+  --brass-tint: #2a2112;
+
+  --ok: #5fd3a0;
+  --ok-tint: #0e2a22;
+  --ok-line: #1f4a3a;
+  --danger: #ff7a80;
+  --danger-ink: #ff9f94;
+  --danger-tint: #2e151a;
+
+  --star: 222, 228, 255;
+  --star-alpha: 0.7;
+  --sky-grid: rgba(149, 156, 255, 0.045);
+  --nebula-a: rgba(90, 98, 230, 0.14);
+  --nebula-b: rgba(224, 166, 74, 0.06);
+  --scrollbar: #26304d;
+}

@@ -1,0 +1,114 @@
+@use '../../styles/tokens' as *;
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.modesLabel {
+  margin-right: 4px;
+  font-size: 13px;
+  color: $ink-3;
+}
+
+.mode {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid $line-input;
+  border-radius: $radius-pill;
+  background: $surface;
+  font-size: 13px;
+  font-weight: 500;
+
+  &[aria-pressed='true'] {
+    background: $ink;
+    border-color: $ink;
+    color: $surface;
+  }
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 12px 10px 16px;
+  background: $surface;
+  border: 1px solid $line-strong;
+  border-radius: $radius-lg;
+
+  &:focus-within {
+    border-color: $orbit;
+    box-shadow: 0 0 0 3px $orbit-tint;
+  }
+}
+
+.input {
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 6px 0;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1.5;
+  max-height: 160px;
+  field-sizing: content;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hint {
+  flex-grow: 1;
+  font-size: 12px;
+  color: $ink-3;
+}
+
+.iconBtn,
+.iconLink,
+.send {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.iconBtn {
+  border: none;
+  background: $ground;
+  color: $ink-2;
+}
+
+.iconLink {
+  border: 1px solid $line-input;
+  color: $ink;
+}
+
+.send {
+  border: none;
+  background: $orbit;
+  color: $surface;
+
+  &:hover:not(:disabled) {
+    background: $orbit-hover;
+  }
+
+  &:disabled {
+    background: $orbit-line;
+  }
+}

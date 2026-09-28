@@ -1,0 +1,440 @@
+@use '../styles/tokens' as *;
+
+.page {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.main {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 18px 32px;
+  border-bottom: 1px solid $line;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: $ink-3;
+  }
+}
+
+.connected {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid $line;
+  border-radius: $radius-pill;
+  background: $surface;
+  font-size: 13px;
+  color: $ink-soft;
+
+  svg {
+    color: $ok;
+  }
+}
+
+.body {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 32px 32px;
+}
+
+.joinCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+
+  h2 {
+    margin: 0;
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+}
+
+.joinRow {
+  display: flex;
+  gap: 10px;
+}
+
+.field {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid $line-strong;
+  border-radius: 10px;
+  background: $surface;
+  color: $ink-3;
+
+  &:focus-within {
+    border-color: $orbit;
+  }
+
+  input {
+    flex-grow: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    color: $ink;
+
+    &::placeholder {
+      color: $ink-4;
+    }
+  }
+}
+
+.primary,
+.primaryLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  min-height: 46px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: $orbit;
+  color: $surface !important;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background: $orbit-hover;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
+.primaryLink {
+  min-height: 44px;
+  padding: 0 16px;
+}
+
+.secondary {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid $line-strong;
+  border-radius: $radius-sm;
+  background: $surface;
+  color: $ink !important;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.hint {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $ink-2;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  color: $danger-ink;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.pulse,
+.liveDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: $orbit;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  background: $danger;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dayTitle {
+  margin: 0;
+  font-family: $font-body;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: $ink-3;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 18px;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-md;
+}
+
+.liveRow {
+  border: 1.5px solid $orbit-line;
+}
+
+.time {
+  width: 84px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.info {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+.liveChip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: $radius-pill;
+  background: $danger-tint;
+  color: $danger-ink;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: $ink-soft;
+}
+
+.rowActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.switchLabel {
+  margin-left: 8px;
+  font-size: 13px;
+  color: $ink-2;
+}
+
+.caption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: $ink-3;
+}
+
+.info .caption {
+  font-size: 13px;
+}
+
+.aside {
+  width: 372px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  background: $surface;
+  border-left: 1px solid $line;
+  overflow-y: auto;
+
+  h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+  }
+}
+
+.settings {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid $line-soft;
+
+    > span {
+      flex-grow: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-top: 4px;
+    }
+  }
+}
+
+.settingLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.infoBox {
+  margin: 0;
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: $ground;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $ink-soft;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: $ink-2;
+  }
+}
+
+.asideTitle {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $ink-3;
+}
+
+.recaps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 0;
+    border-bottom: 1px solid $line-soft;
+  }
+
+  a {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: $ink;
+
+    &:hover {
+      color: $orbit;
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: $bp-medium) {
+  .page {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .aside {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid $line;
+  }
+
+  .body {
+    overflow: visible;
+  }
+}
+
+@media (max-width: $bp-narrow) {
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .joinRow {
+    flex-direction: column;
+  }
+}

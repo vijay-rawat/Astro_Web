@@ -1,0 +1,131 @@
+// Sample agent configuration for Kestrel Labs (Technology preset). Replace with API data.
+import type { AgentConfig } from '../types/astro';
+
+export const agentConfigs: AgentConfig[] = [
+  {
+    id: 'mentor',
+    fallback: true,
+    paused: false,
+    short: 'How things work here, and who to ask',
+    summary: 'Helps new and existing people find how things work at Kestrel Labs, and who to ask when the docs run out.',
+    topics: ['Onboarding', 'How we work', 'Who owns what', 'Internal tools', 'Team rituals'],
+    roles: ['Everyone'],
+    rolesNote: 'New hires get a 30-day learning plan in their first week.',
+    sources: [
+      { name: 'Employee handbook', where: 'Notion' },
+      { name: 'Onboarding guide', where: 'Notion' },
+      { name: 'Team directory', where: 'Google Workspace' },
+      { name: 'Platform wiki', where: 'Confluence' },
+    ],
+    tools: [
+      { name: 'Search docs and wiki', permission: 'read' },
+      { name: 'Suggest who to ask', permission: 'read' },
+      { name: 'Build a 30-day learning plan', permission: 'draft' },
+    ],
+    guardrails: [
+      { id: 'person', label: 'Name a person when the docs run out', detail: 'Uses the team directory to point at the owner, not a channel.', enabled: true },
+      { id: 'short', label: 'Keep answers short for first-week hires', detail: 'Three or four sentences, with a link to read more.', enabled: true },
+      { id: 'invites', label: 'Add new hires to team channels', detail: 'Sends the invite itself instead of just telling them where to go.', enabled: false },
+    ],
+  },
+  {
+    id: 'tech',
+    paused: false,
+    short: 'Code, architecture, deploys, incidents',
+    summary: 'Answers questions about code, architecture, deploys and incidents, straight from the repos and runbooks.',
+    topics: ['Code and repos', 'Architecture decisions', 'Deploys', 'Incidents', 'Runbooks'],
+    roles: ['Engineering', 'Product', 'Leadership'],
+    rolesNote: 'Private repos stay limited to people who can open them in GitHub.',
+    sources: [
+      { name: 'GitHub', where: 'kestrel org' },
+      { name: 'Architecture decisions', where: 'GitHub, ADRs' },
+      { name: 'Runbooks and incident reviews', where: 'Confluence' },
+      { name: 'Jira', where: 'PLAT, PAY, MOB' },
+    ],
+    tools: [
+      { name: 'Search code and pull requests', permission: 'read' },
+      { name: 'Read CI and deploy logs', permission: 'read' },
+      { name: 'Create Jira tickets', permission: 'approval' },
+    ],
+    guardrails: [
+      { id: 'mirror', label: 'Mirror GitHub permissions', detail: "If you can't open a repo in GitHub, Astro won't answer from it either.", enabled: true },
+      { id: 'secrets', label: 'Hide keys and secrets found in code', detail: 'Answers mention that a secret exists, never its value.', enabled: true },
+      { id: 'tickets', label: 'Offer to draft tickets from answers', detail: 'Drafts wait for your approval before anything reaches Jira.', enabled: true },
+    ],
+  },
+  {
+    id: 'finance',
+    paused: false,
+    short: 'Revenue, spend, budgets, invoices',
+    summary: 'Answers revenue, spend and budget questions by running read-only queries on the finance warehouse.',
+    topics: ['Revenue', 'Budgets', 'Spend by team', 'Vendor contracts', 'Invoices'],
+    roles: ['Finance', 'Leadership'],
+    rolesNote: "Team leads can ask about their own team's spend only.",
+    sources: [
+      { name: 'Finance warehouse', where: 'Postgres, read-only' },
+      { name: 'Budget 2026', where: 'Google Sheets' },
+      { name: 'Vendor contracts', where: 'Google Drive' },
+      { name: 'Billing', where: 'Stripe' },
+    ],
+    tools: [
+      { name: 'Run read-only SQL', permission: 'read' },
+      { name: 'Build charts and tables', permission: 'read' },
+      { name: 'Export to CSV', permission: 'approval' },
+    ],
+    guardrails: [
+      { id: 'query', label: 'Show the query behind every number', detail: 'People can open the SQL and check the figure themselves.', enabled: true },
+      { id: 'salaries', label: 'Never show individual salaries', detail: 'Payroll appears only as team totals.', enabled: true },
+      { id: 'guests', label: 'Say numbers out loud when guests are in a call', detail: 'Off: with guests, figures go to you privately.', enabled: false },
+    ],
+  },
+  {
+    id: 'hr',
+    paused: false,
+    short: 'Policies, leave, benefits, hiring',
+    summary: 'Explains policies, leave and benefits. Personal records stay visible only to that person and the HR team.',
+    topics: ['Leave and holidays', 'Benefits', 'Policies', 'Hiring process', 'Review calendar'],
+    roles: ['Everyone'],
+    rolesNote: 'Personal records: only the person themselves and the HR team.',
+    sources: [
+      { name: 'HR policies', where: 'Notion' },
+      { name: 'Leave records', where: 'HR system' },
+      { name: 'Holiday calendar', where: 'Google Calendar' },
+      { name: 'Hiring pipeline', where: 'Applicant tracker' },
+    ],
+    tools: [
+      { name: 'Look up policies', permission: 'read' },
+      { name: 'Check your own leave balance', permission: 'read' },
+      { name: 'Draft a leave request', permission: 'approval' },
+    ],
+    guardrails: [
+      { id: 'policy', label: 'Answer only from written policy', detail: 'No guesses about exceptions. Those go to HR.', enabled: true },
+      { id: 'sensitive', label: 'Hand sensitive topics to a person', detail: 'Complaints, health and conduct questions go straight to the HR team.', enabled: true },
+      { id: 'bands', label: 'Share salary bands', detail: 'Off: bands stay with HR and the hiring manager.', enabled: false },
+    ],
+  },
+  {
+    id: 'exec',
+    paused: false,
+    short: 'Briefs, trade-offs, cross-team risks',
+    summary: 'Pulls from every other agent to summarize, compare options and prepare briefs for leadership.',
+    topics: ['Weekly briefs', 'Trade-offs', 'OKR progress', 'Cross-team risks', 'Board prep'],
+    roles: ['Leadership'],
+    rolesNote: 'Sees only what each leader could already open themselves.',
+    sources: [
+      { name: 'Answers from other agents', where: 'Astro' },
+      { name: 'Briefs and meeting recaps', where: 'Astro' },
+      { name: 'OKRs', where: 'Google Sheets' },
+      { name: 'Board decks', where: 'Google Drive' },
+    ],
+    tools: [
+      { name: 'Write briefs', permission: 'draft' },
+      { name: 'Compare options with trade-offs', permission: 'read' },
+      { name: 'Schedule recurring briefs', permission: 'approval' },
+    ],
+    guardrails: [
+      { id: 'label', label: 'Label recommendations as suggestions', detail: 'Decisions stay with people. Astro shows the trade-offs.', enabled: true },
+      { id: 'trace', label: 'Show which agent each point came from', detail: 'Every line of a brief links back to its agent and source.', enabled: true },
+      { id: 'clients', label: 'Name clients in briefs', detail: 'Off: clients appear as industry and size only.', enabled: false },
+    ],
+  },
+];

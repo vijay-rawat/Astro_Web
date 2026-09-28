@@ -1,0 +1,48 @@
+@use '../../styles/tokens' as *;
+
+.switch {
+  width: 52px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.track {
+  width: 40px;
+  height: 24px;
+  padding: 3px;
+  border-radius: $radius-pill;
+  background: $ink-4;
+  display: flex;
+  justify-content: flex-start;
+  transition: background 0.15s ease;
+}
+
+.on {
+  background: $orbit;
+  justify-content: flex-end;
+}
+
+.thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: $surface;
+}
+
+.night .track {
+  background: #4a5677;
+}
+
+.night .on {
+  background: #6c73e0;
+}

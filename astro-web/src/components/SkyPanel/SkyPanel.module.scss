@@ -1,0 +1,144 @@
+@use '../../styles/tokens' as *;
+
+.panel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid $line-mid;
+  border-radius: 10px;
+  background:
+    radial-gradient(120% 90% at 100% 0%, $orbit-wash, transparent 60%),
+    $surface;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eyebrow,
+.live,
+.readouts dt {
+  font-family: $font-mono;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $ink-3;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $ok;
+
+  i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 0 currentColor;
+    animation: ping 2.4s ease-out infinite;
+  }
+}
+
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 55%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+}
+
+.moonRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.moon {
+  flex-shrink: 0;
+}
+
+.halo {
+  fill: none;
+  stroke: $brass-line;
+  stroke-width: 1;
+  stroke-dasharray: 1.5 2.5;
+}
+
+.dark {
+  fill: $orbit-tint;
+}
+
+.lit {
+  fill: $brass;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--brass) 60%, transparent));
+}
+
+.value {
+  font-size: 13px;
+  font-weight: 600;
+  color: $ink;
+}
+
+.meta {
+  font-size: 12px;
+  color: $ink-3;
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0;
+
+  div {
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: $orbit-wash;
+    border: 1px solid $line-soft;
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-family: $font-mono;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: $ink;
+  }
+}
+
+// A faint telemetry sweep along the bottom edge.
+.scan {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, $orbit, transparent);
+  opacity: 0.6;
+  animation: scan 5s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(260%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan {
+    display: none;
+  }
+}

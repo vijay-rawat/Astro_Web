@@ -1,0 +1,104 @@
+@use '../../styles/tokens' as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 0 12px 0 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(149, 156, 255, 0.18);
+  background: rgba(6, 10, 22, 0.72);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba(149, 156, 255, 0.32);
+  }
+
+  &:focus-within {
+    border-color: rgba(149, 156, 255, 0.75);
+    box-shadow:
+      0 0 0 3px rgba(110, 118, 255, 0.18),
+      0 0 24px -6px rgba(110, 118, 255, 0.55);
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 52px;
+    padding: 18px 0 4px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #eef1fa;
+    font-size: 15px;
+
+    &:-webkit-autofill {
+      -webkit-text-fill-color: #eef1fa;
+      transition: background-color 9999s ease-out 0s;
+    }
+  }
+
+  label {
+    position: absolute;
+    left: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #8b95b0;
+    pointer-events: none;
+    transform-origin: left center;
+    transition:
+      transform 0.18s ease,
+      color 0.18s ease;
+  }
+
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    transform: translateY(-118%) scale(0.76);
+    color: #aeb3ff;
+  }
+}
+
+.icon {
+  position: absolute;
+  left: 14px;
+  color: #6f7a96;
+
+  .field:focus-within & {
+    color: #b4b9ff;
+  }
+}
+
+.invalid {
+  border-color: rgba(255, 122, 128, 0.6);
+
+  &:focus-within {
+    border-color: rgba(255, 122, 128, 0.9);
+    box-shadow: 0 0 0 3px rgba(255, 122, 128, 0.16);
+  }
+}
+
+.error,
+.hint {
+  margin: 0;
+  padding-left: 4px;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.error {
+  color: #ff9f94;
+}
+
+.hint {
+  color: #8b95b0;
+}

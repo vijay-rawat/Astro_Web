@@ -1,0 +1,148 @@
+@use '../../styles/tokens' as *;
+
+.panel {
+  width: 372px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px;
+  background: $surface;
+  border-left: 1px solid $line;
+  overflow-y: auto;
+}
+
+.title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.sub {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: $ink-3;
+}
+
+.access {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  background: $ground;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $ink-soft;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: $ink-2;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border: 1.5px solid $line;
+  border-radius: $radius-md;
+  background: $surface;
+}
+
+.active {
+  border-color: $orbit;
+  background: $orbit-wash;
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+}
+
+.num {
+  flex-shrink: 0;
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: $brass-tint;
+  color: $brass-ink;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.where {
+  font-size: 12px;
+  color: $ink-3;
+}
+
+.excerpt {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: $ink-soft;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: $ink-3;
+
+  a,
+  button {
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: none;
+    color: $orbit;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+}
+
+@media (max-width: $bp-medium) {
+  .panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid $line;
+  }
+}

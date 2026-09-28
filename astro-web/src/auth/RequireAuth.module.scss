@@ -1,0 +1,26 @@
+@use '../styles/tokens' as *;
+
+.boot {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $ground;
+
+  svg {
+    opacity: 0;
+    animation: appear 0.4s ease 0.2s forwards, breathe 2.4s ease-in-out 0.6s infinite;
+  }
+}
+
+@keyframes appear {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes breathe {
+  50% {
+    transform: scale(1.08);
+  }
+}

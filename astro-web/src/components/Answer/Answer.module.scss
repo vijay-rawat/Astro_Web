@@ -1,0 +1,131 @@
+@use '../../styles/tokens' as *;
+
+.answer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.via {
+  font-size: 13px;
+  color: $ink-3;
+}
+
+.body {
+  padding: 20px 22px;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+  font-size: 15px;
+  line-height: 1.6;
+  color: $ink-body;
+
+  p {
+    margin: 0 0 12px;
+  }
+
+  p:last-child,
+  ul:last-child {
+    margin-bottom: 0;
+  }
+
+  ul {
+    margin: 0 0 12px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.cite {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  margin-left: 4px;
+  border: none;
+  border-radius: 5px;
+  background: $brass-tint;
+  color: $brass-ink;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  vertical-align: 2px;
+
+  &:hover {
+    background: $brass-line;
+  }
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: $radius-md;
+  background: $danger-tint;
+  color: $danger-ink;
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 0 10px;
+    border: none;
+    border-radius: $radius-sm;
+    background: transparent;
+    color: $ink-2;
+    font-size: 13px;
+
+    &:hover {
+      background: $rail;
+      color: $ink;
+    }
+  }
+}
+
+.followUps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  button {
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid $line-strong;
+    border-radius: $radius-pill;
+    background: transparent;
+    font-size: 13px;
+
+    &:hover {
+      border-color: $orbit;
+      color: $orbit-hover;
+    }
+  }
+}

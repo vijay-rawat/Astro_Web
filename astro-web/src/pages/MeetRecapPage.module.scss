@@ -1,0 +1,358 @@
+@use '../styles/tokens' as *;
+
+.page {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  margin: auto;
+  max-width: 420px;
+  text-align: center;
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+
+  p {
+    margin: 0 0 16px;
+    color: $ink-2;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 16px 32px 18px;
+  border-bottom: 1px solid $line;
+
+  h1 {
+    margin: 4px 0 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: $ink-3;
+  }
+}
+
+.crumbs {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: $ink-3;
+}
+
+.actions,
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.secondary,
+.secondaryBtn,
+.dark,
+.primary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: $radius-sm;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.secondary,
+.secondaryBtn {
+  border: 1px solid $line-input;
+  background: $surface;
+  color: $ink !important;
+
+  &:disabled {
+    color: $ink-3 !important;
+  }
+}
+
+.dark {
+  border: none;
+  background: $ink;
+  color: $surface;
+}
+
+.primary {
+  border: none;
+  background: $orbit;
+  color: $surface;
+  font-weight: 600;
+
+  &:hover {
+    background: $orbit-hover;
+  }
+}
+
+.body {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 24px 32px;
+}
+
+.mainCol {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px 20px;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+  }
+}
+
+.cardHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.summary {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.6;
+  color: $ink-body;
+}
+
+.stack {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.decision {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: $orbit-wash;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.sourceLine {
+  font-size: 12px;
+  color: $brass-ink;
+}
+
+.caption {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: $ink-3;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th {
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: $ink-3;
+    border-bottom: 1px solid $line;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid $line-soft;
+    vertical-align: middle;
+  }
+}
+
+.task {
+  font-weight: 500;
+}
+
+.approveCell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.approve {
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid $orbit-line;
+  border-radius: $radius-sm;
+  background: $surface;
+  color: $orbit-hover;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.done {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: $ok;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  color: $danger-ink;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: $ground;
+  font-size: 14px;
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+}
+
+.aside {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 20px;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+
+  h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    > span:last-child {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $line-input;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.astroAvatar {
+  background: $orbit-tint;
+}
+
+.personName {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.next {
+  padding: 14px;
+  border-radius: 10px;
+  background: $brass-tint;
+
+  p {
+    margin: 0 0 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: $brass-deep;
+  }
+
+  a {
+    font-size: 13px;
+    font-weight: 600;
+    color: $brass-ink;
+  }
+}
+
+@media (max-width: $bp-medium) {
+  .body {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .aside {
+    width: auto;
+  }
+
+  .twoCol {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

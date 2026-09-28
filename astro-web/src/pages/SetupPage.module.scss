@@ -1,0 +1,469 @@
+@use '../styles/tokens' as *;
+
+.page {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px 32px 18px;
+  border-bottom: 1px solid $line;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: $ink-3;
+  }
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.stepLine {
+  width: 28px;
+  height: 1px;
+  background: $line-strong;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 0 14px 0 7px;
+  border: none;
+  border-radius: $radius-pill;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: $ink;
+}
+
+.stepCurrent {
+  background: $surface;
+  font-weight: 600;
+}
+
+.stepUpcoming {
+  color: $ink-3;
+}
+
+.dot {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid $line-heavy;
+  font-size: 12px;
+  font-weight: 600;
+  color: $ink-3;
+}
+
+.dotDone {
+  background: $ok;
+  border-color: $ok;
+  color: $surface;
+}
+
+.dotCurrent {
+  background: $orbit;
+  border-color: $orbit;
+  color: $surface;
+}
+
+.body {
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 26px 32px;
+}
+
+.split {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.primary {
+  flex-grow: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.intro {
+  h2 {
+    margin: 0 0 4px;
+    font-size: 21px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: $ink-2;
+  }
+}
+
+.domains {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.domain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 124px;
+  padding: 16px 18px;
+  border: 1.5px solid $line;
+  border-radius: $radius-md;
+  background: $surface;
+  text-align: left;
+
+  svg {
+    color: $ink-2;
+  }
+
+  &[aria-pressed='true'] {
+    border-color: $orbit;
+    background: $orbit-wash;
+
+    svg {
+      color: $orbit;
+    }
+  }
+}
+
+.domainTitle {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.domainDesc {
+  font-size: 13px;
+  line-height: 1.45;
+  color: $ink-2;
+}
+
+.textLink {
+  align-self: flex-start;
+  min-height: 40px;
+  padding: 0 4px;
+  border: none;
+  background: none;
+  color: $orbit;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.panel {
+  width: 360px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  background: $surface;
+  border: 1px solid $line;
+  border-radius: $radius-lg;
+}
+
+.panelTitle {
+  margin: 0 0 2px;
+  font-family: $font-display;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.caption {
+  display: block;
+  margin: 0;
+  font-size: 12px;
+  color: $ink-3;
+}
+
+.okText {
+  font-size: 12px;
+  color: $ok;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h4 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: $ink-2;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+
+  li {
+    padding: 6px 12px;
+    border-radius: $radius-pill;
+    background: $orbit-tint;
+    font-size: 13px;
+    font-weight: 500;
+    color: $orbit-deep;
+  }
+}
+
+.sourceList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: $ink-body;
+
+    span {
+      width: 7px;
+      height: 7px;
+      border-radius: 2px;
+      background: $brass;
+    }
+  }
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  li {
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: $ground;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+}
+
+.connectors {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.connector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid $line;
+  border-radius: $radius-md;
+  background: $surface;
+}
+
+.later {
+  background: $surface-2;
+}
+
+.connectorHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  > span:last-child {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+}
+
+.connectorIcon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: $ground;
+}
+
+.connectorName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.connectBtn {
+  min-height: 36px;
+  border: 1px solid $ink;
+  border-radius: $radius-sm;
+  background: $ink;
+  color: $surface;
+  font-size: 13px;
+  font-weight: 500;
+
+  &:disabled {
+    border-color: $line;
+    background: $ground;
+    color: $ink-3;
+  }
+}
+
+.connectOn {
+  border-color: $ok-line;
+  background: $ok-tint;
+  color: $ok;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progressHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.track {
+  height: 6px;
+  border-radius: 3px;
+  background: $line-soft;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 3px;
+  background: $orbit;
+  transition: width 0.4s ease;
+}
+
+.fillDone {
+  background: $ok;
+}
+
+.note {
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: $ground;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $ink-soft;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 32px;
+  border-top: 1px solid $line;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: $orbit;
+  color: $surface !important;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    background: $orbit-hover;
+  }
+}
+
+.back {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid $line-input;
+  border-radius: 10px;
+  background: $surface;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (max-width: $bp-medium) {
+  .split {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .panel {
+    width: 100%;
+  }
+
+  .connectors {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: $bp-narrow) {
+  .header,
+  .body,
+  .footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .domains,
+  .connectors {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stepLine {
+    display: none;
+  }
+}

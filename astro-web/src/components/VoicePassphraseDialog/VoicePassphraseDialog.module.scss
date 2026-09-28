@@ -1,0 +1,149 @@
+@use '../../styles/tokens' as *;
+
+.dialog {
+  width: min(440px, calc(100vw - 32px));
+  padding: 22px 22px 20px;
+  border: 1px solid rgba(149, 156, 255, 0.2);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #0c1226, #070b18);
+  color: #eef1fa;
+  box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.9);
+
+  &::backdrop {
+    background: rgba(3, 5, 12, 0.72);
+  }
+
+  &[open] {
+    animation: pop 0.3s cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 10px;
+  background: none;
+  color: #8b95b0;
+
+  &:hover {
+    color: #fff;
+    background: rgba(149, 156, 255, 0.1);
+  }
+}
+
+.orb {
+  width: 200px;
+  height: 150px;
+  margin: -14px auto 0;
+  overflow: hidden;
+
+  > * {
+    width: 200px;
+    height: 200px;
+    margin-top: -25px;
+  }
+}
+
+.title {
+  margin: 0 0 8px;
+  text-align: center;
+  font-family: $font-display;
+  font-size: 22px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.text {
+  margin: 0;
+  color: #cfd5ea;
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.heard {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(110, 118, 255, 0.1);
+  border: 1px solid rgba(149, 156, 255, 0.2);
+  font-size: 14px;
+  color: #dfe2ff;
+
+  q {
+    font-weight: 600;
+  }
+}
+
+.error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 122, 128, 0.1);
+  border: 1px solid rgba(255, 122, 128, 0.28);
+  color: #ffc1ba;
+  font-size: 13.5px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.primary,
+.ghost,
+.danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.primary {
+  border: none;
+  background: linear-gradient(180deg, #6a71f2, #444bd0);
+  color: #fff;
+
+  &:disabled {
+    opacity: 0.55;
+  }
+}
+
+.ghost {
+  border: 1px solid rgba(149, 156, 255, 0.3);
+  background: none;
+  color: #dfe2ff;
+}
+
+.danger {
+  border: 1px solid rgba(255, 122, 128, 0.5);
+  background: rgba(255, 122, 128, 0.12);
+  color: #ffc1ba;
+
+  &:disabled {
+    opacity: 0.55;
+  }
+}

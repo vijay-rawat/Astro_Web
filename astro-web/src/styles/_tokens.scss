@@ -1,0 +1,78 @@
+// Astro design tokens. Celestial-chart palette: cool ground, deep ink,
+// orbit indigo for action, brass for evidence and citations.
+//
+// Colors resolve to CSS custom properties so the whole app can switch between
+// the light "chart paper" theme and the dark "deep space" theme at runtime.
+// Values for both themes live in _themes.scss.
+
+// Ground and surfaces
+$ground: var(--ground);
+$surface: var(--surface);
+$surface-2: var(--surface-2);
+$rail: var(--rail);
+$line: var(--line);
+$line-soft: var(--line-soft);
+$line-mid: var(--line-mid);
+$line-input: var(--line-input);
+$line-strong: var(--line-strong);
+$line-heavy: var(--line-heavy);
+$hover-veil: var(--hover-veil);
+
+// Ink
+$ink: var(--ink);
+$ink-body: var(--ink-body);
+$ink-soft: var(--ink-soft);
+$ink-2: var(--ink-2);
+$ink-3: var(--ink-3);
+$ink-4: var(--ink-4);
+
+// Orbit (primary action)
+$orbit: var(--orbit);
+$orbit-hover: var(--orbit-hover);
+$orbit-deep: var(--orbit-deep);
+$orbit-bright: var(--orbit-bright);
+$orbit-line: var(--orbit-line);
+$orbit-tint: var(--orbit-tint);
+$orbit-wash: var(--orbit-wash);
+$orbit-glow: var(--orbit-glow);
+
+// Brass (evidence, citations, attention)
+$brass: var(--brass);
+$brass-ink: var(--brass-ink);
+$brass-deep: var(--brass-deep);
+$brass-deeper: var(--brass-deeper);
+$brass-line: var(--brass-line);
+$brass-tint: var(--brass-tint);
+
+// Status
+$ok: var(--ok);
+$ok-tint: var(--ok-tint);
+$ok-line: var(--ok-line);
+$danger: var(--danger);
+$danger-ink: var(--danger-ink);
+$danger-tint: var(--danger-tint);
+
+// Night (voice call and live meeting). Dark in both themes.
+$night: #0f1830;
+$night-panel: #151f3b;
+$night-line: #22305a;
+$night-text: #e8ecf5;
+$night-muted: #a9b3cb;
+$night-ring: #4f58c9;
+$night-ring-soft: #8c92f0;
+$night-moon: #e0a64a;
+
+// Type
+$font-display: 'Bricolage Grotesque', 'IBM Plex Sans', system-ui, sans-serif;
+$font-body: 'IBM Plex Sans', system-ui, sans-serif;
+$font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+// Shape
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 14px;
+$radius-pill: 999px;
+
+// Breakpoints
+$bp-narrow: 900px;
+$bp-medium: 1200px;

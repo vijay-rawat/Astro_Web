@@ -1,0 +1,92 @@
+# The whole stack locally, production-shaped: Postgres behind PgBouncer, Redis for limits, cache
+# and jobs, Mailpit to catch email (http://localhost:8025), the API and a worker.
+#
+#   docker compose up --build
+#
+# Passwords here are for local use only.
+
+x-app-env: &app-env
+  APP_ENV: development
+  DATABASE_URL: postgresql+asyncpg://astro_app:app-dev@pgbouncer:6432/astro
+  AUTH_DATABASE_URL: postgresql+asyncpg://astro_auth:auth-dev@pgbouncer:6432/astro
+  MIGRATIONS_DATABASE_URL: postgresql+asyncpg://astro_owner:owner-dev@postgres:5432/astro
+  DB_BEHIND_PGBOUNCER: "true"
+  REDIS_URL: redis://redis:6379/0
+  SMTP_HOST: mailpit
+  SMTP_PORT: "1025"
+  SMTP_STARTTLS: "false"
+  WEB_ORIGIN: http://localhost:5173
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_PASSWORD: postgres-dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/db_roles.sql:/sql/db_roles.sql:ro
+      - ./docker/postgres/init.sh:/docker-entrypoint-initdb.d/10-roles.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      retries: 20
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    environment:
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      AUTH_TYPE: scram-sha-256
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: "2000"
+      DEFAULT_POOL_SIZE: "40"
+      ADMIN_USERS: postgres
+    volumes:
+      - ./docker/pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no", "--maxmemory", "256mb",
+              "--maxmemory-policy", "volatile-lru"]
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports: ["8025:8025"]
+
+  migrate:
+    build: .
+    environment: *app-env
+    command: ["alembic", "upgrade", "head"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    build: .
+    environment:
+      <<: *app-env
+      WEB_CONCURRENCY: "2"
+    ports: ["8000:8000"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      pgbouncer:
+        condition: service_started
+      redis:
+        condition: service_started
+
+  worker:
+    build: .
+    environment: *app-env
+    command: ["arq", "app.workers.worker.WorkerSettings"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+
+volumes:
+  pgdata:
