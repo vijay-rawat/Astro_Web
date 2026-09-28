@@ -32,3 +32,4 @@ def id_column() -> Mapped[uuid.UUID]:
 
 def created_column() -> Mapped[datetime]:
     return mapped_column(DateTime(timezone=True), default=utcnow, nullable=False)
+    
